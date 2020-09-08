@@ -1,0 +1,55 @@
+---
+title: 2020/21 Semester One
+slug: /
+---
+![](assets/2020-09-08-01-45-13.png)
+
+import { useState, useEffect } from "react";
+export const CalendarData = ({calendarId}) => {
+  const [calendar, setCalendar] = useState(null);
+  useEffect(() => {
+    const fetchCalendar = () => {
+      fetch(
+        `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=AIzaSyA4mHoOnf6f5BvCGU98QSM6JhuZVgbq8h0&timeMin=${new Date().toJSON()}`
+      )
+        .then((result) => result.json())
+        .then((data) => setCalendar(data));
+    };
+    fetchCalendar();
+  }, []);
+  if (!calendar) {
+    return <h1>Fetching calendar...</h1>;
+  }
+  return (
+    <ul>
+      {calendar.items.map((item) => (
+        <li key>{item.summary} on <b>{new Date(item.start.date).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</b></li>
+      ))}
+    </ul>
+  );
+};
+
+## Upcoming Deadlines
+
+<CalendarData calendarId='9bi9qfcqmc640gh0gsiu3cqhck@group.calendar.google.com'/>
+
+## Upcoming Tests
+
+<CalendarData calendarId='tf9ljqlmolo68812rkqgj6m4i4@group.calendar.google.com'/>
+
+## Schedule 
+
+|       | Mon         | Tue         | Wed             | Thu        | Fri               |       |
+|-------|-------------|-------------|-----------------|---------- -|-------------------|-------|
+| 08:30 | ME49001 FYP |             | ME41006 Robots  |            |                   | 08:30 |
+| 09:30 | ME49001 FYP |             | ME41006 Robots  |            |                   | 09:30 |
+| 10:30 | ME49001 FYP |             | ME41006 Robots  |            |                   | 10:30 |
+| 11:30 | ME49001 FYP |             |                 |            | ELC3531 English   | 11:30 |
+| 12:30 |             | ME44004 H&M |                 |            | ELC3531 English   | 12:30 |
+| 13:30 | ME49001 FYP | ME44004 H&M |                 |            |                   | 13:30 |
+| 14:30 | ME49001 FYP | ME44004 H&M |                 |            |                   | 14:30 |
+| 15:30 | ME49001 FYP |             | ENGL2012 French | ENG4001 PM | ENGL2012 French   | 15:30 |
+| 16:30 | ME49001 FYP |             |                 | ENG4001 PM | ENGL2012 French   | 16:30 |
+| 17:30 | ME49001 FYP |             |                 | ENG4001 PM |                   | 17:30 |
+| 18:30 | ME49001 FYP |             |                 |            |                   | 18:30 |
+
